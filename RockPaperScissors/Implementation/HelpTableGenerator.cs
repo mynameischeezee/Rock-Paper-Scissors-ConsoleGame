@@ -30,11 +30,6 @@ namespace RockPaperScissors
                 input[i] = Enum.GetName(typeof(HelpMessageEnum), Convert.ToInt32(input[i]));
 
             }
-            for (int i = 0; i < input.Length; i++)
-            {
-                Console.Write($"[{input[i]}]");
-            }
-            Console.WriteLine();
             return input;
         }
     }

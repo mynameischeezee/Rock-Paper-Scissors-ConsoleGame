@@ -11,12 +11,17 @@ namespace RockPaperScissors
     {
         static void Main(string[] args)
         {
+            RandomKeyGenerator keyGenerator = new RandomKeyGenerator();
+            HMACGenerator hMACGenerator = new HMACGenerator();
             IValidator validator = new Validator();
             MessageProvider messageProvider = new MessageProvider();
             if (validator.Validate(args))
             {
+                var key = keyGenerator.Generate();
                 var a = validator.Validate(args);
                 Game game = new Game(args);
+                var pcmove = game.GenerateMove();
+                Console.WriteLine($"[~]HMAC: {hMACGenerator.Generate(args[pcmove], key)}");
                 Console.WriteLine(messageProvider.StartMessage(args));
                 while(true)
                 {
@@ -26,14 +31,20 @@ namespace RockPaperScissors
                     {
                         case "0": Environment.Exit(0); break;
                         case "?": messageProvider.HelpMessage(game.gamerules, args).Write(); break;
+
                     }
                     int choice;
                     if (Int32.TryParse(input, out choice))
                     {
-                        game.MakeMove(choice);
+                        Console.WriteLine(game.MakeMove(choice, pcmove));
+                        Console.WriteLine($"[~]HMAC key is: {key}");
                         break;
                     }
-                    Console.WriteLine(messageProvider.ErrorMessage());
+                    else if (input != "?")
+                    {
+                        Console.WriteLine(messageProvider.ErrorMessage());
+                    }
+
                 }
             }
             else

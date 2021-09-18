@@ -11,14 +11,8 @@ namespace RockPaperScissors
     {
         public string ErrorMessage()
         {
-            return "Error. Invalid arguments given. Try one more time.";
+            return "[X]Error. Invalid arguments given. Try one more time.";
         }
-
-        public string FinalMessage(bool IsWinner)
-        {
-            return IsWinner ? "Congratulations! You win!" : "You lose.";
-        }
-
         public ConsoleTable HelpMessage(int[,] GameRules, string[] InputArgs)
         {
             return HelpTableGenerator.GenerateHelp(GameRules, InputArgs);
@@ -26,7 +20,7 @@ namespace RockPaperScissors
 
         public string StartMessage(string[] InputArgs)
         {
-            string outputMessage = "Avalible Moves:";
+            string outputMessage = "[i]Avalible Moves:";
             for (int i = 0; i < InputArgs.Length; ++i) { outputMessage += Environment.NewLine + $"{i + 1} - {InputArgs[i]}"; }
             outputMessage += Environment.NewLine + "0 - Exit."; outputMessage += Environment.NewLine + "? - Help.";
             return outputMessage;
